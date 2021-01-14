@@ -65,7 +65,7 @@ func mp3(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	queueMap = make(map[string]sync.WaitGroup)
+	queueMap = make(map[string]*sync.WaitGroup)
 	outdir = "./out/"
 	http.HandleFunc("/tts/mp3", mp3)
 	http.ListenAndServe(":4001", nil)
