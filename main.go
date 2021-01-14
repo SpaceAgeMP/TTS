@@ -24,7 +24,7 @@ func mp3(w http.ResponseWriter, req *http.Request) {
 
 	text := req.Form.Get("q")
 
-	hash := sha512.New()
+	hash := sha512.New512_256()
 	hash.Write([]byte(text))
 	hashSum := hash.Sum([]byte{})
 
@@ -61,7 +61,7 @@ func mp3(w http.ResponseWriter, req *http.Request) {
 		os.Chtimes(filenameMP3, now, now)
 	}
 
-	fmt.Fprintf(w, "https://api.spaceage.mp/out/%s", filenameMP3)
+	fmt.Fprintf(w, "https://api.spaceage.mp/out/%s.mp3", filename)
 }
 
 func main() {
