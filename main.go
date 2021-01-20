@@ -11,6 +11,8 @@ import (
 	"time"
 )
 
+const MAX_LENGTH = 256
+
 var outdir string
 
 var queueSync sync.Mutex
@@ -23,6 +25,11 @@ func mp3(w http.ResponseWriter, req *http.Request) {
 	}
 
 	text := req.Form.Get("q")
+
+	if len(text) > MAX_LENGTH {
+		http.Error(w, "Message too long", 400)
+		return
+	}
 
 	hash := sha512.New512_256()
 	hash.Write([]byte(text))
