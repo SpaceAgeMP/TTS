@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-const MAX_LENGTH = 256
+const maxLength = 256
 
 var outdir string
 
@@ -26,7 +26,7 @@ func mp3(w http.ResponseWriter, req *http.Request) {
 
 	text := req.Form.Get("q")
 
-	if len(text) > MAX_LENGTH {
+	if len(text) > maxLength {
 		http.Error(w, "Message too long", 400)
 		return
 	}
