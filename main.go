@@ -75,5 +75,5 @@ func main() {
 	queueMap = make(map[string]*sync.WaitGroup)
 	outdir = "out/"
 	http.HandleFunc("/tts/mp3", mp3)
-	http.ListenAndServe(":4001", nil)
+	http.ListenAndServe("127.0.0.1:4001", nil)
 }
