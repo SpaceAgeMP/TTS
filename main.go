@@ -68,12 +68,12 @@ func mp3(w http.ResponseWriter, req *http.Request) {
 		os.Chtimes(filenameMP3, now, now)
 	}
 
-	fmt.Fprintf(w, "https://api.spaceage.mp/tts/%s", filenameMP3)
+	fmt.Fprintf(w, "https://tts.spaceage.mp/%s", filenameMP3)
 }
 
 func main() {
 	queueMap = make(map[string]*sync.WaitGroup)
 	outdir = "out/"
-	http.HandleFunc("/tts/mp3", mp3)
+	http.HandleFunc("/mp3", mp3)
 	http.ListenAndServe("127.0.0.1:4001", nil)
 }
