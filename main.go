@@ -31,7 +31,7 @@ var s3client = s3.New(s3ssession)
 
 func fileExists(fileName string) (bool, error) {
 	_, err := s3client.HeadObject(&s3.HeadObjectInput{
-		Key: aws.String(fileName),
+		Key:    aws.String(fileName),
 		Bucket: aws.String(s3bucket),
 	})
 	if err == nil {
@@ -89,7 +89,6 @@ func mp3(w http.ResponseWriter, req *http.Request) {
 				Key:    aws.String(filenameMP3),
 				Bucket: aws.String(s3bucket),
 				Body:   f,
-				Bucket: ,
 			})
 			if err != nil {
 				log.Printf("Issue uploading to S3: %v", err)
