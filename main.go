@@ -23,7 +23,9 @@ var outdir string
 var queueSync sync.Mutex
 var queueMap map[string]*sync.WaitGroup
 
-var s3ssession = session.Must(session.NewSession())
+var s3ssession = session.Must(session.NewSessionWithOptions(session.Options{
+	SharedConfigState: session.SharedConfigEnable,
+}))
 var s3client = s3.New(s3ssession)
 
 func fileExists(fileName string) (bool, error) {
