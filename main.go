@@ -23,6 +23,7 @@ var outdir string
 var queueSync sync.Mutex
 var queueMap map[string]*sync.WaitGroup
 
+var s3bucket = "spaceage-tts"
 var s3ssession = session.Must(session.NewSessionWithOptions(session.Options{
 	SharedConfigState: session.SharedConfigEnable,
 }))
@@ -31,6 +32,7 @@ var s3client = s3.New(s3ssession)
 func fileExists(fileName string) (bool, error) {
 	_, err := s3client.HeadObject(&s3.HeadObjectInput{
 		Key: aws.String(fileName),
+		Bucket: aws.String(s3bucket),
 	})
 	if err == nil {
 		return true, nil
@@ -84,8 +86,10 @@ func mp3(w http.ResponseWriter, req *http.Request) {
 			os.Remove(filenameWAV)
 			f, _ := os.Open(localFilenameMP3)
 			_, err := s3client.PutObject(&s3.PutObjectInput{
-				Key:  aws.String(filenameMP3),
-				Body: f,
+				Key:    aws.String(filenameMP3),
+				Bucket: aws.String(s3bucket),
+				Body:   f,
+				Bucket: ,
 			})
 			if err != nil {
 				log.Printf("Issue uploading to S3: %v", err)
