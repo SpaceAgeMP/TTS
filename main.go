@@ -4,6 +4,7 @@ import (
 	"crypto/sha512"
 	"encoding/hex"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"os/exec"
@@ -79,10 +80,13 @@ func mp3(w http.ResponseWriter, req *http.Request) {
 			exec.Command("lame", filenameWAV, filenameMP3).Run()
 			os.Remove(filenameWAV)
 			f, _ := os.Open(filenameMP3)
-			s3client.PutObject(&s3.PutObjectInput{
+			_, err := s3client.PutObject(&s3.PutObjectInput{
 				Key:  aws.String(filenameMP3),
 				Body: f,
 			})
+			if err != nil {
+				log.Printf("Issue uploading to S3: %v", err)
+			}
 			f.Close()
 			os.Remove(filenameMP3)
 			curQueue.Done()
