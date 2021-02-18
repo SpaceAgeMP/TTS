@@ -62,7 +62,8 @@ func mp3(w http.ResponseWriter, req *http.Request) {
 	filename := hex.EncodeToString(hashSum)
 
 	filenameWAV := outdir + filename + ".wav"
-	filenameMP3 := outdir + filename + ".mp3"
+	filenameMP3 := filename + ".mp3"
+	localFilenameMP3 := outdir + filenameMP3
 
 	exists, err := fileExists(filenameMP3)
 	if !exists {
@@ -77,9 +78,9 @@ func mp3(w http.ResponseWriter, req *http.Request) {
 
 		if !hadQueue {
 			exec.Command("espeak", "-v", "en", "-w", filenameWAV, text).Run()
-			exec.Command("lame", filenameWAV, filenameMP3).Run()
+			exec.Command("lame", filenameWAV, localFilenameMP3).Run()
 			os.Remove(filenameWAV)
-			f, _ := os.Open(filenameMP3)
+			f, _ := os.Open(localFilenameMP3)
 			_, err := s3client.PutObject(&s3.PutObjectInput{
 				Key:  aws.String(filenameMP3),
 				Body: f,
@@ -88,7 +89,7 @@ func mp3(w http.ResponseWriter, req *http.Request) {
 				log.Printf("Issue uploading to S3: %v", err)
 			}
 			f.Close()
-			os.Remove(filenameMP3)
+			os.Remove(localFilenameMP3)
 			curQueue.Done()
 
 			queueSync.Lock()
