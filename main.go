@@ -105,7 +105,7 @@ func mp3(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 
-	fmt.Fprintf(w, "https://d1x5a3iv2gxgba.cloudfront.net/%s", filenameMP3)
+	fmt.Fprintf(w, "https://tts-cdn.spaceage.mp/%s", filenameMP3)
 }
 
 func main() {
