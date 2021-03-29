@@ -46,6 +46,10 @@ func fileExists(fileName string) (bool, error) {
 	return false, err
 }
 
+func health(w http.ResponseWriter, req *http.Request) {
+	w.Write([]byte("OK"))
+}
+
 func mp3(w http.ResponseWriter, req *http.Request) {
 	err := req.ParseForm()
 	if err != nil {
@@ -113,5 +117,6 @@ func main() {
 	outdir = "out/"
 	os.Mkdir(outdir, 0755)
 	http.HandleFunc("/mp3", mp3)
+	http.HandleFunc("/health", health)
 	http.ListenAndServe("127.0.0.1:4001", nil)
 }
