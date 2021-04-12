@@ -23,7 +23,7 @@ var outdir string
 var queueSync sync.Mutex
 var queueMap map[string]*sync.WaitGroup
 
-var s3bucket = "spaceage-tts-eu"
+var s3bucket = "spaceage-tts"
 var s3ssession = session.Must(session.NewSessionWithOptions(session.Options{
 	SharedConfigState: session.SharedConfigEnable,
 }))
