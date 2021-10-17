@@ -118,5 +118,5 @@ func main() {
 	os.Mkdir(outdir, 0755)
 	http.HandleFunc("/mp3", mp3)
 	http.HandleFunc("/health", health)
-	http.ListenAndServe("127.0.0.1:4001", nil)
+	http.ListenAndServe(":4001", nil)
 }
