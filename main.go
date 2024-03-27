@@ -73,7 +73,7 @@ func mp3(w http.ResponseWriter, req *http.Request) {
 	filenameMP3 := filename + ".mp3"
 	localFilenameMP3 := outdir + filenameMP3
 
-	exists, err := fileExists(filenameMP3)
+	exists, _ := fileExists(filenameMP3)
 	if !exists {
 		queueSync.Lock()
 		curQueue, hadQueue := queueMap[filename]
