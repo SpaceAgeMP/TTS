@@ -9,9 +9,10 @@ FROM alpine
 RUN apk add --no-cache espeak lame curl
 RUN adduser -D tts
 
-COPY --from=builder /app/main /tts
+COPY --from=builder /app/main /app/tts
 
 USER tts:tts
-WORKDIR /home/tts
-
-ENTRYPOINT [ "/tts" ]
+WORKDIR /app
+VOLUME /app/out
+RUN mkdir -p /app/out && chown tts:tts /app/out
+ENTRYPOINT [ "/app/tts" ]
