@@ -11,8 +11,10 @@ RUN adduser -D tts
 
 COPY --from=builder /app/tts /app/tts
 
-USER tts:tts
 WORKDIR /app
 VOLUME /app/out
+
 RUN mkdir -p /app/out && chown tts:tts /app/out
+
+USER tts:tts
 ENTRYPOINT [ "/app/tts" ]
