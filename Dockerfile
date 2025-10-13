@@ -16,5 +16,7 @@ VOLUME /app/out
 
 RUN mkdir -p /app/out && chown tts:tts /app/out
 
+ENV OUT_DIR=/app/out
+ENV LISTEN_ADDR=:4001
 USER tts:tts
 ENTRYPOINT [ "/app/tts" ]

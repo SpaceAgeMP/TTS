@@ -7,7 +7,9 @@ import (
 	"time"
 )
 
-const OUT_DIR = "./out"
+var OUT_DIR = os.Getenv("OUT_DIR")
+var LISTEN_ADDR = os.Getenv("LISTEN_ADDR")
+
 const MAX_LENGTH = 256
 const MAX_CACHE_AGE = time.Hour * 24 * 14
 
@@ -24,6 +26,6 @@ func main() {
 	http.HandleFunc("/health", health)
 
 	go cleanupTask()
-	log.Printf("Listening on :4001")
-	http.ListenAndServe(":4001", nil)
+	log.Printf("Listening on %s", LISTEN_ADDR)
+	http.ListenAndServe(LISTEN_ADDR, nil)
 }
