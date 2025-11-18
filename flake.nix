@@ -6,7 +6,7 @@
   outputs = { self, nixpkgs, flake-utils }: 
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system; };
+        pkgs = nixpkgs.legacyPackages.${system};
         package = pkgs.buildGoModule {
           pname = "spaceage-tts";
           version = "0.1.0";
